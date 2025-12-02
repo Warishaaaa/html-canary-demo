@@ -4,19 +4,19 @@ pipeline {
     stages {
         stage('Clone Repo') {
             steps {
-                git 'https://github.com/Warishaaaa/html-canary-demo.git'
+                sh 'git clone --depth 1 https://github.com/YOUR-USERNAME/html-canary-demo.git .'
             }
         }
 
         stage('Stop Old Server') {
             steps {
-                sh 'fuser -k 5000/tcp || true'
+                sh 'pkill -f "http.server 5000" || true'
             }
         }
 
         stage('Start V1 Server') {
             steps {
-                sh "nohup python3 -m http.server 5000 --directory . > v1.log 2>&1 &"
+                sh 'python3 -m http.server 5000 --directory . >/dev/null 2>&1 &'
             }
         }
     }
